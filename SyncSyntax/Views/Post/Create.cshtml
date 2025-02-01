@@ -16,18 +16,13 @@
         <input asp-for="Post.Title" class="form-control" />
         <span asp-validation-for="Post.Title" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="Post.CategoryId"></label>
         <select asp-for="Post.CategoryId" asp-items="Model.Categories" class="form-control" >
             <option value="">Select Category</option>
         </select>
         <span asp-validation-for="Post.CategoryId" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Post.Author"></label>
-        <input asp-for="Post.Author" class="form-control" />
-        <span asp-validation-for="Post.Author" class="text-danger"></span>
     </div>
 
     <div class="for-group">
@@ -49,7 +44,7 @@
 @section Scripts{
     <script src="https://cdn.tiny.cloud/1/8v7ap9no879e3vf48t9bipzno7dfbo8dgefvm9kgcttuz3nu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-                tinymce.init({
+          tinymce.init({
           selector: 'textarea'
         });
     </script>
