@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SyncSyntax.Data;
 using SyncSyntax.Models.ViewModels;
 using System.Net;
@@ -50,6 +51,22 @@ namespace SyncSyntax.Controllers
 
             return View(postViewModel);
         }
+
+        [HttpGet]
+        public IActionResult Index(int? categoryId)
+        {
+            var postQuery = _context.Posts.Include(p => p.Category).AsQueryable();
+            if (categoryId.HasValue) 
+            {
+                postQuery =  postQuery.Where(p=>p.CategoryId == categoryId);
+            }
+            var posts = postQuery.ToList();
+
+            ViewData["Categories"] = _context.Categories.ToList();
+
+            return View(posts);
+        }
+
 
         private string UploadFileToFolder(IFormFile file)
         {

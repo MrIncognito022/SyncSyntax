@@ -19,7 +19,7 @@
 
     <div class="form-group">
         <label asp-for="Post.CategoryId"></label>
-        <select asp-for="Post.CategoryId" asp-items="Model.Categories" class="form-control" >
+        <select asp-for="Post.CategoryId" asp-items="Model.Categories" class="form-control">
             <option value="">Select Category</option>
         </select>
         <span asp-validation-for="Post.CategoryId" class="text-danger"></span>
@@ -33,7 +33,7 @@
 
     <div class="form-group">
         <label asp-for="FeatureImage"></label>
-        <input asp-for = "FeatureImage" class="form-control" />
+        <input asp-for="FeatureImage" class="form-control" />
     </div>
 
     <button type="submit" class="btn btn-primary mt-1">Create</button>
@@ -41,7 +41,7 @@
 </form>
 <hr />
 
-@section Scripts{
+@section Scripts {
     <script src="https://cdn.tiny.cloud/1/8v7ap9no879e3vf48t9bipzno7dfbo8dgefvm9kgcttuz3nu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
           tinymce.init({
