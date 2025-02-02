@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SyncSyntax.Data;
 using SyncSyntax.Models.ViewModels;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace SyncSyntax.Controllers
 {
@@ -84,5 +85,9 @@ namespace SyncSyntax.Controllers
             return "/images/" + fileName;
         }
 
+        public static string RemoveHtmlTags(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
+        }
     }
 }

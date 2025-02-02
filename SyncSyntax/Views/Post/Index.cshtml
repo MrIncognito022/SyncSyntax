@@ -1,35 +1,53 @@
-﻿@model IEnumerable<Post>
-
+﻿@using System.Text.RegularExpressions
+@using SyncSyntax.Helpers
+@model IEnumerable<Post>
 @{
     ViewData["Title"] = "Blog Posts";
 }
 
-@* <h2 class="text-center my-4">@ViewData["Title"]</h2> *@
+<div class="container py-5">
+    <!-- Header with Title and Create Button -->
+    <div class="row mb-4">
+        <div class="col-12 col-md-6">
+            <h2>Our Blog Posts</h2>
+        </div>
+        <div class="col-12 col-md-6 text-end">
+            <a asp-action="Create" class="btn btn-success btn-sm rounded ">Create New Post</a>
+        </div>
+    </div>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var post in Model)
-    {
-        <div class="col">
-            <div class="card ">
-                <h3 class="card-header fs-5">@post.Title</h3>
-                <div class="card-body">
-                    <h5 class="card-title text-muted">@post.Author</h5>
-                </div>
+    <!-- Displaying Blog Posts in Cards -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var post in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <!-- Display Image or Default Image -->
+                    <img src="@(!string.IsNullOrEmpty(post.FeatureImagePath) ? post.FeatureImagePath : "/images/default-image.jpg")"
+                    class="card-img-top"
+                    alt="@post.Title"
+                    style="height: 200px; object-fit: cover;" />
 
-                <img src="@post.FeatureImagePath" class="card-img-top" alt="@post.Title" />
+                    <div class="card-body">
+                        <h5 class="card-title">@post.Title</h5>
+                        <p class="text-muted mb-2">Published on @post.PublishedDate.ToString("MMMM dd, yyyy")</p>
+                        <p class="card-text">
+                            @(HtmlTagHelper.RemoveHtmlTags(post.Content).Length > 100 ? HtmlTagHelper.RemoveHtmlTags(post.Content).Substring(0, 100) + "..." : HtmlTagHelper.RemoveHtmlTags(post.Content));
+                        </p>
+                        <span class="badge bg-secondary">@post.Category?.Name</span>
+                    </div>
 
-                <div class="card-body">
-                    <p class="card-text">
-                        @post.Content.Substring(0, Math.Min(post.Content.Length, 100))...
-                    </p>
-                </div>
-                <div class="card-body">
-                    <a asp-action="Details" asp-route-id="@post.Id" class="card-link">Read More</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Posted @post.PublishedDate.ToString("MMMM dd, yyyy")
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <a asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary btn-sm">Read More</a>
+                        <div class="text-end">
+                            <small class="text-muted">By @post.Author</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
+
+                   
