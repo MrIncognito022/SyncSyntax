@@ -33,7 +33,8 @@ namespace SyncSyntax.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(PostViewModel postViewModel)
+        [RequestSizeLimit(10485760)]
+        public async Task<IActionResult> Create(PostViewModel postViewModel)
         {
             if(ModelState.IsValid)
             {
@@ -43,10 +44,12 @@ namespace SyncSyntax.Controllers
                     ModelState.AddModelError("Image", "Invalid image format. Allowed formats are .jpg, .jpeg, .png");
                     return View(postViewModel);
                 }
-                postViewModel.Post.FeatureImagePath =  UploadFileToFolder(postViewModel.FeatureImage);
+                postViewModel.Post.FeatureImagePath = await UploadFileToFolder(postViewModel.FeatureImage);
                 postViewModel.Post.GenerateSlug();
                 _context.Posts.Add(postViewModel.Post);
                 _context.SaveChanges();
+
+                return RedirectToAction("Index");
             }
 
 
@@ -86,21 +89,37 @@ namespace SyncSyntax.Controllers
 
         }
 
-        private string UploadFileToFolder(IFormFile file)
-        {
-           var inputFileExtension = Path.GetExtension(file.FileName);
-           var fileName = Guid.NewGuid().ToString() + inputFileExtension;
-           var wwwRootPath = _webHostEnvironment.WebRootPath;
-           var imagesFolderPath = Path.Combine(wwwRootPath,"images");
-           var filePath = Path.Combine(imagesFolderPath, fileName);
 
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
+        private async Task<string> UploadFileToFolder(IFormFile file)
+        {
+            var inputFileExtension = Path.GetExtension(file.FileName);
+            var fileName = Guid.NewGuid().ToString() + inputFileExtension;
+            var wwwRootPath = _webHostEnvironment.WebRootPath;
+            var imagesFolderPath = Path.Combine(wwwRootPath, "images");
+
+            if (!Directory.Exists(imagesFolderPath))
             {
-                file.CopyToAsync(fileStream);
+                Directory.CreateDirectory(imagesFolderPath);
+            }
+
+            var filePath = Path.Combine(imagesFolderPath, fileName);
+
+            try
+            {
+                await using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception if needed.
+                return "Error Uploading Image: " + ex.Message;
             }
 
             return "/images/" + fileName;
         }
+
 
     }
 }

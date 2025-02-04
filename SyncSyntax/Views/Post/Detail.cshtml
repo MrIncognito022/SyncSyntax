@@ -29,8 +29,23 @@
         margin: 20px 0;
     }
 
+    /* Feature image styles */
+    .feature-image {
+        width: 100%; /* Makes it responsive */
+        height: 500px; /* Set desired height */
+        object-fit: cover; /* Ensures the image maintains aspect ratio */
+        margin-bottom: 20px;
+    }
 </style>
-
+<div class="row mb-4">
+    <div class="col-12 col-md-6">
+       
+    </div>
+    <div class="col-12 col-md-6 text-end">
+        <a asp-action="Create" class="btn btn-secondary rounded  ">Edit Post</a>
+        <a asp-action="Create" class="btn btn-danger rounded mx-3 ">Delete Post</a>
+    </div>
+</div>
 <div class="post-detail">
     <h1>@Model.Title</h1>
     <p><strong>By:</strong> @Model.Author | <strong>Published on:</strong> @Model.PublishedDate.ToString("MMMM dd, yyyy")</p>
@@ -38,7 +53,7 @@
 
     @if (!string.IsNullOrEmpty(Model.FeatureImagePath))
     {
-        <img src="@Model.FeatureImagePath" alt="@Model.Title" class="img-fluid mb-4" />
+        <img src="@Model.FeatureImagePath" alt="@Model.Title" class="feature-image" />
     }
 
     <hr>
