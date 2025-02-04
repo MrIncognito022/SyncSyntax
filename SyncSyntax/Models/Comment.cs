@@ -17,6 +17,9 @@ namespace SyncSyntax.Models
         public string UserEmail { get; set; }
         [DataType(DataType.Date)]
         public DateTime CommentDate { get; set; } = DateTime.Now;
+
+        [Required]
+        public string Content { get; set; }
         public int PostId { get; set; }
         public Post Post { get; set; }
     }

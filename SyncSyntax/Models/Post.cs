@@ -32,7 +32,7 @@ public class Post
     [ValidateNever]
     public Category Category { get; set; }
     [ValidateNever]
-    public ICollection<Comment> Comments { get; set; }
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     public void GenerateSlug()
     {
         Slug = Regex.Replace(Title.ToLower().Trim(), @"[^a-z0-9\s-]", "") 

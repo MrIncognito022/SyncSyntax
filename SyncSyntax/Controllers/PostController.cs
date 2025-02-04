@@ -23,7 +23,8 @@ namespace SyncSyntax.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //ViewData["Category"] = new SelectList(_context.Categories, "Id", "Name");
+            //ViewData["Category"] = new SelectList(_context.Categori
+            //es, "Id", "Name");
             var postViewModel = new PostViewModel
             {
                 Categories = new SelectList(_context.Categories, "Id", "Name"),
@@ -42,7 +43,6 @@ namespace SyncSyntax.Controllers
                     ModelState.AddModelError("Image", "Invalid image format. Allowed formats are .jpg, .jpeg, .png");
                     return View(postViewModel);
                 }
-
                 postViewModel.Post.FeatureImagePath =  UploadFileToFolder(postViewModel.FeatureImage);
                 postViewModel.Post.GenerateSlug();
                 _context.Posts.Add(postViewModel.Post);
@@ -68,6 +68,23 @@ namespace SyncSyntax.Controllers
             return View(posts);
         }
 
+        public IActionResult Detail(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var post = _context.Posts.Include(p=>p.Category).Include(p=>p.Comments)
+                .FirstOrDefault(p=>p.Id == id);
+
+            if (post == null) 
+            {
+                return NotFound();
+            }
+            return View(post);
+
+        }
 
         private string UploadFileToFolder(IFormFile file)
         {
@@ -85,9 +102,5 @@ namespace SyncSyntax.Controllers
             return "/images/" + fileName;
         }
 
-        public static string RemoveHtmlTags(string input)
-        {
-            return Regex.Replace(input, "<.*?>", String.Empty);
-        }
     }
 }
