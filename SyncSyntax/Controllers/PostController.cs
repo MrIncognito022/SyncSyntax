@@ -50,8 +50,6 @@ namespace SyncSyntax.Controllers
 
                 return RedirectToAction("Index");
             }
-
-
             return View(postViewModel);
         }
 
@@ -212,7 +210,6 @@ namespace SyncSyntax.Controllers
 
             return "/images/" + fileName;
         }
-
-
     }
 }
+
