@@ -31,7 +31,7 @@
                         <h5 class="card-title">@post.Title</h5>
                         <p class="text-muted mb-2">Published on @post.PublishedDate.ToString("MMMM dd, yyyy")</p>
                         <p class="card-text">
-                            @(HtmlTagHelper.RemoveHtmlTags(post.Content).Length > 100 ? HtmlTagHelper.RemoveHtmlTags(post.Content).Substring(0, 100) + "..." : HtmlTagHelper.RemoveHtmlTags(post.Content));
+                            @(HtmlTagHelper.RemoveHtmlTags(post.Content).Length > 100 ? HtmlTagHelper.RemoveHtmlTags(post.Content).Substring(0, 100) + "..." : HtmlTagHelper.RemoveHtmlTags(post.Content))
                         </p>
                         <span class="badge bg-secondary">@post.Category?.Name</span>
                     </div>
