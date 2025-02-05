@@ -9,7 +9,6 @@ namespace SyncSyntax.Models.ViewModels
         public Post Post { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> Categories { get; set; }
-        [Required(ErrorMessage = "Feature Image is Required")]
-        public IFormFile FeatureImage { get; set; }
+        public IFormFile? FeatureImage { get; set; }
     }
 }

@@ -22,8 +22,7 @@ public class Post
     public string Author { get; set; }
     [ValidateNever]
     public string FeatureImagePath { get; set; }
-    [ValidateNever]
-    public string Slug { get; set; }
+  
     [DataType(DataType.Date)]
     public DateTime PublishedDate { get; set; } = DateTime.Now;
 
@@ -33,9 +32,5 @@ public class Post
     public Category Category { get; set; }
     [ValidateNever]
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
-    public void GenerateSlug()
-    {
-        Slug = Regex.Replace(Title.ToLower().Trim(), @"[^a-z0-9\s-]", "") 
-                     .Replace(" ", "-"); 
-    }
+    
 }

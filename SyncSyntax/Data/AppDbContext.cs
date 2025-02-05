@@ -41,7 +41,6 @@ namespace SyncSyntax.Data
                     PublishedDate = new DateTime(2023, 1, 1), // Static date instead of DateTime.Now
                     CategoryId = 1,
                     FeatureImagePath = "tech_image.jpg", // Sample image path
-                    Slug = "tech-post-1"
                 },
                 new Post
                 {
@@ -52,7 +51,6 @@ namespace SyncSyntax.Data
                     PublishedDate = new DateTime(2023, 1, 1), // Static date
                     CategoryId = 2,
                     FeatureImagePath = "health_image.jpg", // Sample image path
-                    Slug = "health-post-1"
                 },
                 new Post
                 {
@@ -63,7 +61,6 @@ namespace SyncSyntax.Data
                     PublishedDate = new DateTime(2023, 1, 1), // Static date
                     CategoryId = 3,
                     FeatureImagePath = "lifestyle_image.jpg", // Sample image path
-                    Slug = "lifestyle-post-1"
                 }
             );
         }

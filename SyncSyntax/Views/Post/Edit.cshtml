@@ -18,16 +18,17 @@
             <h2>@ViewData["Title"]</h2>
         </div>
         <div class="col-12 col-md-6 text-end">
-            <a asp-action="Index" asp-controller = "Post" class="btn btn-primary rounded ">Back to List</a>
+            <a asp-action="Index" asp-controller="Post" class="btn btn-primary rounded ">Back to List</a>
         </div>
     </div>
     <hr />
-    <form asp-action="Create" method="post" enctype="multipart/form-data">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
         <!-- Validation Summary -->
         <div class="validation-summary">
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
 
+        <input asp-for="Post.Id" hidden />
         <div class="form-group">
             <label asp-for="Post.Title"></label>
             <input asp-for="Post.Title" class="form-control" />
