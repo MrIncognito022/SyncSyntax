@@ -66,17 +66,57 @@
     {
         <p class="text-muted fst-italic">No comments yet. Be the first to comment!</p>
     }
-
     <h4>Add a Comment</h4>
-    <form asp-action="AddComment" method="post">
-        <div class="mb-3">
-            <label for="UserName" class="form-label">Your Name</label>
-            <input type="text" class="form-control" id="UserName" name="UserName" required />
+    <form id="commentForm">
+        <div class="form-group">
+            <label for="UserName">Name</label>
+            <input for="UserName" id="UserName" name="UserName" required class="form-control" />
         </div>
-        <div class="mb-3">
-            <label for="Content" class="form-label">Comment</label>
-            <textarea class="form-control" id="Content" name="Content" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit Comment</button>
+        <div class="form-group">
+            <label for="Content">Content</label>
+            <textarea for="Content" id="Content" name="Content" rows="3" required class="form-control"></textarea>
+        </div>  
+        <button type="submit" class="btn btn-primary mt-2 p-2 rounded">Submit Comment</button>
     </form>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+            $('#commentForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent traditional form submission
+
+                // Read form data into variables
+                var userName = $('#UserName').val();
+                var content = $('#Content').val();
+                var postId = @Model.Id; // Assuming you want to associate the comment with a specific post
+
+                // Send the data via AJAX
+                $.ajax({
+                    url: '@Url.Action("AddComment", "Post")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        UserName: userName,
+                        Content: content,
+                        PostId: postId // Include the post ID if needed
+                    }),
+                    success: function(response) {
+                        $('#commentForm')[0].reset(); // Reset the form
+
+                        // Append the new comment to the comments section
+                        $('.comments-section').append(`
+                            <div class="card mb-3 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">${response.userName}</h5>
+                                    <p class="card-text text-muted"><small>${response.commentDate}</small></p>
+                                    <p class="card-text">${response.content}</p>
+                                </div>
+                            </div>
+                        `);
+                    }
+                });
+            });
+        });
+    </script>
+}

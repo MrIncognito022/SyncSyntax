@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SyncSyntax.Data;
+using SyncSyntax.Models;
 using SyncSyntax.Models.ViewModels;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -178,6 +179,27 @@ namespace SyncSyntax.Controllers
             }
             return View(post);
 
+        }
+
+
+        [HttpPost]
+        public JsonResult AddComment([FromBody] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.CommentDate = DateTime.Now;
+                _context.Comments.Add(comment);
+                _context.SaveChanges();
+
+                return Json(new
+                {
+                    userName = comment.UserName,
+                    commentDate = comment.CommentDate.ToString("MMMM dd, yyyy"),
+                    content = comment.Content
+                });
+            }
+
+            return Json(new { success = false, message = "Invalid data" });
         }
 
 
