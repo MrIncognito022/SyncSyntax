@@ -6,7 +6,7 @@
 <style>
     .post {
         padding: 20px;
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
         font-family: Arial, sans-serif;
     }
@@ -31,7 +31,6 @@
     <h1>@Model.Title</h1>
     <p><strong class="badge bg-primary">By:</strong> @Model.Author | <strong class="badge bg-primary">Published on:</strong> @Model.PublishedDate.ToString("MMMM dd, yyyy")</p>
     <p><strong class="badge bg-secondary">Category:</strong> @Model.Category?.Name</p>
-
     @if (!string.IsNullOrEmpty(Model.FeatureImagePath))
     {
         <img src="@Model.FeatureImagePath" alt="@Model.Title" class="feature-image" />
