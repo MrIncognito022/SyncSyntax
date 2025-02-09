@@ -1,0 +1,40 @@
+﻿@model SignInViewModel;
+
+@{
+    ViewData["Title"] = "SignIn";
+}
+
+<style>
+    .sign-in {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        font-family: Arial, sans-serif;
+    }
+</style>
+
+<div class="sign-in">
+   
+    <hr />
+    <form asp-action="SignIn" method="post">
+        <!-- Validation Summary -->
+        <div class="validation-summary">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-1">SignIn</button>
+        <a asp-action="Index" asp-controller="Post" class="btn btn-secondary mt-1">Back</a>
+    </form>
+    <hr />
+</div>

@@ -15,13 +15,24 @@
                 <li class="nav-item ">
                     <a asp-action="Index" class="nav-link">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Category</a>
-                </li>
+                @if(User.IsInRole("Admin")){
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Index" asp-controller="Category">Category</a>
+                    </li>
+                }
             </ul>
-            <div class="d-flex ms-auto me-5">
-                <a href="#" class="btn btn-outline-light">Sign In</a>
-            </div>
+            
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Auth" asp-action="SignOut" class="btn btn-outline-light">SignOut</a>
+            }
+            else
+            {
+                <div class="d-flex ms-auto me-5">
+                    <a asp-controller="Auth" asp-action="SignIn" class="btn btn-outline-light">SignIn</a>
+                </div>
+            }
+            
         </div>
     </div>
 </nav>

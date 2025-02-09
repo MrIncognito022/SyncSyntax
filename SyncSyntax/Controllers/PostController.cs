@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace SyncSyntax.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class PostController : Controller
     {
         private readonly AppDbContext _context;
@@ -22,6 +24,7 @@ namespace SyncSyntax.Controllers
         }
         // GET: Posts/Create
         [HttpGet]
+        
         public IActionResult Create()
         {
             //ViewData["Category"] = new SelectList(_context.Categori
@@ -111,6 +114,7 @@ namespace SyncSyntax.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index(int? categoryId)
         {
             var postQuery = _context.Posts.Include(p => p.Category).AsQueryable();
@@ -163,6 +167,7 @@ namespace SyncSyntax.Controllers
             return RedirectToAction("Index");
         }
 
+        [AllowAnonymous]
         public IActionResult Detail(int id)
         {
             if (id == null)
@@ -183,6 +188,7 @@ namespace SyncSyntax.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public JsonResult AddComment([FromBody] Comment comment)
         {
             if (ModelState.IsValid)

@@ -28,6 +28,13 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Auth/SignIn";  // Redirect path for unauthorized users
+    options.AccessDeniedPath = "/Auth/AccessDenied";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+});
+
 builder.Services.AddTransient<DatabaseSeeder>();
 
 var app = builder.Build();
@@ -42,7 +49,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

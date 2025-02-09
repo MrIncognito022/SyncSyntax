@@ -5,27 +5,30 @@
 
 <style>
     .post {
-        padding: 20px;
-        max-width: 900px;
-        margin: 0 auto;
-        font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
     }
 
     /* Feature image styles */
     .feature-image {
-        width: 100%; /* Makes it responsive */
-        height: 500px; /* Set desired height */
-        object-fit: cover; /* Ensures the image maintains aspect ratio */
-        margin-bottom: 20px;
+    width: 100%; /* Makes it responsive */
+    height: 500px; /* Set desired height */
+    object-fit: cover; /* Ensures the image maintains aspect ratio */
+    margin-bottom: 20px;
     }
 </style>
 <div class="row mb-4">
     <div class="col-12 col-md-6">
     </div>
-    <div class="col-12 col-md-6 text-end">
-        <a asp-action="Edit" asp-route-id ="@Model.Id" class="btn btn-secondary rounded  ">Edit Post</a>
+    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+    {
+        <div class="col-12 col-md-6 text-end">
+            <a asp-action="Edit" asp-route-id ="@Model.Id" class="btn btn-secondary rounded  ">Edit Post</a>
         <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger rounded mx-3 ">Delete Post</a>
     </div>
+    }
 </div>
 <div class="post">
     <h1>@Model.Title</h1>
