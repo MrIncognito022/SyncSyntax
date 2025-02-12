@@ -22,7 +22,7 @@
 <div class="row mb-4">
     <div class="col-12 col-md-6">
     </div>
-    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+    @if (User.IsInRole("Admin"))
     {
         <div class="col-12 col-md-6 text-end">
             <a asp-action="Edit" asp-route-id ="@Model.Id" class="btn btn-secondary rounded  ">Edit Post</a>
@@ -38,17 +38,12 @@
     {
         <img src="@Model.FeatureImagePath" alt="@Model.Title" class="feature-image" />
     }
-
     <hr>
-
     <div>
         @Html.Raw(Model.Content)
     </div>
-
     <hr>
-
     <h3>Comments</h3>
-
     @if (Model.Comments?.Any() ?? false)
     {
         <div class="comments-section">
@@ -68,6 +63,8 @@
     {
         <p class="text-muted fst-italic">No comments yet. Be the first to comment!</p>
     }
+    @if(User.Identity.IsAuthenticated)
+    {
     <h4>Add a Comment</h4>
     <form id="commentForm">
         <div class="form-group">
@@ -80,8 +77,8 @@
         </div>  
         <button type="submit" class="btn btn-primary mt-2 p-2 rounded">Submit Comment</button>
     </form>
+    }
 </div>
-
 @section Scripts{
     <script>
         $(document).ready(function() {

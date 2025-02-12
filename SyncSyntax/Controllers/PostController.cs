@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace SyncSyntax.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin")]
     public class PostController : Controller
     {
         private readonly AppDbContext _context;
@@ -188,7 +188,7 @@ namespace SyncSyntax.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
+         [Authorize(Roles = "Admin,User")]
         public JsonResult AddComment([FromBody] Comment comment)
         {
             if (ModelState.IsValid)
