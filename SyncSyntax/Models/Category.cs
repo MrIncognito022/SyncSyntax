@@ -10,7 +10,7 @@ namespace SyncSyntax.Models
         [MaxLength(100, ErrorMessage = "Category name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        public string? description{get;set;}
-        public ICollection<Post> Posts { get; set; }
+        public string? Description{get;set;}
+        public ICollection<Post>? Posts { get; set; }
     }
 }

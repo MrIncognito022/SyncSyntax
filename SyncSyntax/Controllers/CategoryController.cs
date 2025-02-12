@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SyncSyntax.Data;
+using SyncSyntax.Models;
 
 namespace SyncSyntax.Controllers
 {
@@ -20,9 +21,39 @@ namespace SyncSyntax.Controllers
             var categories = await _context.Categories.ToListAsync();
             return View(categories);
         }
-
+        [HttpGet]
         public  IActionResult Create(){
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Category category)
+        {
+            if(ModelState.IsValid)
+            {
+                await _context.Categories.AddAsync(category);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(category);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id){
+            var category = _context.Categories.Find(id);
+            if(category == null){
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        public async Task<IActionResult> Edit(Category category){
+            if(ModelState.IsValid){
+                _context.Categories.Update(category);
+               await _context.SaveChangesAsync();
+               return RedirectToAction("Index");
+            }
+            return View(category);
         }
     }
 }
