@@ -4,7 +4,7 @@
 }
 
 <style>
-    .post {
+    .content-wrapper {
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;
@@ -30,7 +30,7 @@
     </div>
     }
 </div>
-<div class="post">
+<div class="content-wrapper">
     <h1>@Model.Title</h1>
     <p><strong class="badge bg-primary">By:</strong> @Model.Author | <strong class="badge bg-primary">Published on:</strong> @Model.PublishedDate.ToString("MMMM dd, yyyy")</p>
     <p><strong class="badge bg-secondary">Category:</strong> @Model.Category?.Name</p>
