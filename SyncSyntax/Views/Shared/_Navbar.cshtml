@@ -9,12 +9,6 @@
                 <li class="nav-item">
                     <a asp-action ="Index" asp-controller="Post"  class="nav-link">Home</a>
                 </li>
-                <li class="nav-item ">
-                    <a asp-action="Index" class="nav-link">About</a>
-                </li>
-                <li class="nav-item ">
-                    <a asp-action="Index" class="nav-link">Contact</a>
-                </li>
                 @if(User.IsInRole("Admin")){
                     <li class="nav-item">
                         <a class="nav-link" asp-action="Index" asp-controller="Category">Category</a>

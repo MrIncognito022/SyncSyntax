@@ -55,5 +55,28 @@ namespace SyncSyntax.Controllers
             }
             return View(category);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x=>x.Id == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirm(int id)
+        {
+            var categoryFromDb = await _context.Categories.FindAsync(id);
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            _context.Categories.Remove(categoryFromDb);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
