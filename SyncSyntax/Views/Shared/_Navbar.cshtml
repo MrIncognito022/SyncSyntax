@@ -7,27 +7,30 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a asp-action ="Index" asp-controller="Post"  class="nav-link">Home</a>
+                    <a asp-action="Index" asp-controller="Post" class="nav-link">Home</a>
                 </li>
-                @if(User.IsInRole("Admin")){
+                @if (User.IsInRole("Admin"))
+                {
                     <li class="nav-item">
                         <a class="nav-link" asp-action="Index" asp-controller="Category">Category</a>
                     </li>
                 }
             </ul>
-            
+
             @if (User.Identity.IsAuthenticated)
             {
-                <a asp-controller="Auth" asp-action="SignOut" class="btn btn-outline-light">SignOut</a>
+                <div class="ms-auto me-5">
+                    <a asp-controller="Auth" asp-action="SignOut" class="btn btn-outline-light">SignOut</a>
+                </div>
             }
             else
             {
-                 <div class="d-flex ms-auto gap-2">
+                <div class="d-flex ms-auto gap-2 me-5">
                     <a asp-controller="Auth" asp-action="SignIn" class="btn btn-outline-light">SignIn</a>
                     <a asp-controller="Auth" asp-action="SignUp" class="btn btn-outline-light">SignUp</a>
                 </div>
             }
-            
+
         </div>
     </div>
 </nav>
